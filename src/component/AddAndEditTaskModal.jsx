@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { Zoom, toast } from "react-toastify";
 import { useTaskDispatch } from "../context/TaskProvider";
 
-export default function AddAndEditTaskModal({ onClose, isEdit,editTask }) {
+export default function AddAndEditTaskModal({ onClose, isEdit, editTask }) {
   const dispatch = useTaskDispatch();
-  const [task, setTask] = useState(editTask || {
-    title: "",
-    description: "",
-    priority: "",
-    tags: "",
-  });
+  const [task, setTask] = useState(
+    editTask || {
+      title: "",
+      description: "",
+      priority: "",
+      tags: "",
+    }
+  );
   const handleChange = (e) => {
     const name = e.target.name;
     let value = e.target.value;
@@ -24,18 +27,28 @@ export default function AddAndEditTaskModal({ onClose, isEdit,editTask }) {
   };
   const handleSubmitTask = (e) => {
     e.preventDefault();
-    if (isEdit) {
-      dispatch({
-        type: 'edit_task',
-        payload: task
-      })
-    } else {
-      dispatch({
-        type: "add_task",
-        payload: { id: crypto.randomUUID(), ...task },
+    if (Object.values(task).some((val) => val === "")) {
+      toast.error("Form Submission Failed! Invalid Fields", {
+        autoClose: 1500,
+        position: "bottom-right",
+        closeOnClick: true,
+        transition: Zoom,
+        pauseOnHover: true,
       });
+    } else {
+      if (isEdit) {
+        dispatch({
+          type: "edit_task",
+          payload: task,
+        });
+      } else {
+        dispatch({
+          type: "add_task",
+          payload: { id: crypto.randomUUID(), ...task },
+        });
+      }
+      onClose();
     }
-    onClose();
   };
   return (
     <>
@@ -60,7 +73,6 @@ export default function AddAndEditTaskModal({ onClose, isEdit,editTask }) {
               type="text"
               name="title"
               id="title"
-              required
             />
           </div>
           <div className="space-y-2 lg:space-y-3">
@@ -72,7 +84,6 @@ export default function AddAndEditTaskModal({ onClose, isEdit,editTask }) {
               type="text"
               name="description"
               id="description"
-              required
             ></textarea>
           </div>
           <div className="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20">
@@ -85,7 +96,6 @@ export default function AddAndEditTaskModal({ onClose, isEdit,editTask }) {
                 type="text"
                 name="tags"
                 id="tags"
-                required
               />
             </div>
             <div className="space-y-2 lg:space-y-3">
@@ -96,7 +106,6 @@ export default function AddAndEditTaskModal({ onClose, isEdit,editTask }) {
                 className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
                 name="priority"
                 id="priority"
-                required
               >
                 <option value="">Select Priority</option>
                 <option value="low">Low</option>

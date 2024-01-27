@@ -20,17 +20,27 @@ export default function TaskPage() {
   const state = useTasksState();
   // handler
   const handleRemoveAllTask = () => {
-    dispatch({
-      type: "remove_all_task",
-    });
+    const isConfirm = confirm("are you sure delete all task?");
+    if (isConfirm) {
+      dispatch({
+        type: "remove_all_task",
+      });
+    }
   };
   const handleEdit = (task) => {
     setIsEdit(true);
     setShowModal(true);
     setEditTask(task);
   };
-  const handleClose = () => {
+  const handleCloseModal = () => {
     setShowModal(false);
+    setEditTask(null);
+    isEdit(false);
+  };
+  const handleAddTaskBtn = () => {
+    setShowModal(true);
+    setIsEdit(false);
+    setEditTask(null);
   };
   // search handle
   const handleSearch = (e) => {
@@ -42,28 +52,26 @@ export default function TaskPage() {
       <Header />
       <HeroSection />
       <TaskLayout>
+        {/* Task Header */}
         <TaskHeader>
           {showModal && (
             <AddAndEditTaskModal
               isEdit={isEdit}
               editTask={editTask}
-              onClose={handleClose}
+              onClose={handleCloseModal}
             />
           )}
           <Searchbox onSearch={handleSearch} />
+          <Button onClick={handleAddTaskBtn}>Add Task</Button>
           <Button
-            onClick={() => {
-              setShowModal(true);
-              setIsEdit(false);
-              setEditTask(null);
-            }}
+            disabled={state.tasks.length === 0}
+            onClick={handleRemoveAllTask}
+            className="bg-red-500 disabled:bg-red-300 "
           >
-            Add Task
-          </Button>
-          <Button onClick={handleRemoveAllTask} className="bg-red-500">
             Delete All
           </Button>
         </TaskHeader>
+        {/* TaskLists */}
         <TaskLists totalTask={state.tasks.length}>
           {state.tasks
             .filter((task) =>

@@ -6,10 +6,13 @@ export default function TaskItem({ task, onEdit }) {
   const dispatch = useTaskDispatch();
   // handler
   const handleDeleteTask = () => {
-    dispatch({
-      type: "remove_task",
-      payload: id,
-    });
+    const isConfirm = confirm("Are your sure?");
+    if (isConfirm) {
+      dispatch({
+        type: "remove_task",
+        payload: id,
+      });
+    }
   };
   return (
     <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
