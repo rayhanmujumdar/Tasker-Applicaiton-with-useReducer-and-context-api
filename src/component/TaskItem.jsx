@@ -1,3 +1,4 @@
+import { Zoom, toast } from "react-toastify";
 import { useTaskDispatch } from "../context/TaskProvider";
 import tagBgColor from "../utils/tagBgColor";
 
@@ -11,6 +12,13 @@ export default function TaskItem({ task, onEdit }) {
       dispatch({
         type: "remove_task",
         payload: id,
+      });
+      toast.success("Delete successfully", {
+        autoClose: 1500,
+        position: "bottom-right",
+        closeOnClick: true,
+        transition: Zoom,
+        pauseOnHover: true,
       });
     }
   };

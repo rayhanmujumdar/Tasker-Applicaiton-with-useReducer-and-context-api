@@ -10,6 +10,7 @@ import TaskLayout from "../component/TaskLayout";
 import TaskLists from "../component/TaskLists";
 import Button from "../component/ui/Button";
 import { useTaskDispatch, useTasksState } from "../context/TaskProvider";
+import { Zoom, toast } from "react-toastify";
 
 export default function TaskPage() {
   const [searchText, setSearchText] = useState("");
@@ -25,6 +26,13 @@ export default function TaskPage() {
       dispatch({
         type: "remove_all_task",
       });
+      toast.success("Delete all Task successfully", {
+        autoClose: 1500,
+        position: "bottom-right",
+        closeOnClick: true,
+        transition: Zoom,
+        pauseOnHover: true,
+      });
     }
   };
   const handleEdit = (task) => {
@@ -35,7 +43,7 @@ export default function TaskPage() {
   const handleCloseModal = () => {
     setShowModal(false);
     setEditTask(null);
-    isEdit(false);
+    setIsEdit(false);
   };
   const handleAddTaskBtn = () => {
     setShowModal(true);

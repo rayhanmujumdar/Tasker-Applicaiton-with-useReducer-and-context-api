@@ -41,10 +41,24 @@ export default function AddAndEditTaskModal({ onClose, isEdit, editTask }) {
           type: "edit_task",
           payload: task,
         });
+        toast.success("Task updated successfully", {
+          autoClose: 1500,
+          position: "bottom-right",
+          closeOnClick: true,
+          transition: Zoom,
+          pauseOnHover: true,
+        });
       } else {
         dispatch({
           type: "add_task",
           payload: { id: crypto.randomUUID(), ...task },
+        });
+        toast.success("Task Added successfully", {
+          autoClose: 1500,
+          position: "bottom-right",
+          closeOnClick: true,
+          transition: Zoom,
+          pauseOnHover: true,
         });
       }
       onClose();
