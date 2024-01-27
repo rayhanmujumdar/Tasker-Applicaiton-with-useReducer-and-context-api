@@ -1,8 +1,22 @@
-# React + Vite
+# Assignement - 3 - Improve Tasker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Date: 27/1/24
 
-Currently, two official plugins are available:
+### Project Requirement Analysis:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Tasker Analysis](![Alt text](image.png))
+
+### Task data Structure:
+
+- id
+- Title
+- description
+- prority
+- tags
+- isFavorite
+
+### Deploy:
+
+vercel live link : https://assignment-3-improve-tasker-xi.vercel.app/
+
+github repo link: https://github.com/Learn-with-Sumit/assignment-3-improve-tasker-rayhanmujumdar
